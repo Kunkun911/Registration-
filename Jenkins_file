@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'c7146f27-5480-453e-b14d-0e6d6fe83109', url: 'https://github.com/Kunkun911/Registration-.git']])
+            }
+        }
+        stage("Build") {
+            steps{
+                git branch: 'main', credentialsId: 'c7146f27-5480-453e-b14d-0e6d6fe83109', url: 'https://github.com/Kunkun911/Registration-.git'
+                bat 'python list.py'
+            }
+        }
+        stage('Test') {
+            steps{
+                echo"Test is done"
+            }
+        }
+    }
+}
